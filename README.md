@@ -1,10 +1,10 @@
 # Cinemaxify
 
-Cinemaxify is a Java 17 console application that uses Spring XML bean configuration to capture membership details for self or spouse and assign either a normal or premium membership plan.
+Cinemaxify is a Java 17 console application that uses Spring XML bean configuration to capture membership details for self or spouse and assign either a normal or premium membership plan. In `v3`, the project keeps the `v2` enrollment flow and shifts plan wiring to setter-based dependency injection.
 
 ## GitHub Metadata
 
-- Suggested repository description: `Java 17 Spring console app that manages self/spouse membership enrollment with Spring XML bean wiring and normal/premium plan selection.`
+- Suggested repository description: `Java 17 Spring console app that manages self/spouse membership enrollment with Spring XML setter injection and normal/premium plan selection.`
 - Suggested topics: `java`, `java-17`, `spring-framework`, `spring`, `maven`, `xml-configuration`, `dependency-injection`, `junit5`, `oop`, `console-application`, `membership-system`, `learning-project`, `portfolio-project`
 
 ## Tech Stack
@@ -22,7 +22,7 @@ The application now lets a user choose both the member profile and the membershi
 - `Spouse` represents the spouse profile.
 - `NormalPlan` and `PremiumPlan` represent the two available membership plans.
 - `MembershipWorkflow` manages the console interaction, validation, and repeated enrollment loop.
-- `applicationContext.xml` wires all member-plan combinations as Spring beans.
+- `applicationContext.xml` wires all member-plan combinations as Spring beans using setter injection in `v3`.
 
 ## Current Flow
 
@@ -34,6 +34,7 @@ The application now lets a user choose both the member profile and the membershi
 6. The selected member-plan bean stores the details.
 7. The application prints the entered member information, including the selected plan.
 8. The user can choose to purchase another plan for someone else in the same session.
+9. Spring injects the selected plan into the member bean through property-based configuration.
 
 ## Flow Diagram
 
@@ -97,7 +98,7 @@ Do you want to purchase a plan for someone else?
 
 - The application is console-based and does not expose a REST API.
 - Member details are stored only for the current runtime.
-- There is no persistence, plan pricing, or subscription history in `v2`.
+- There is no persistence, plan pricing, or subscription history in `v3`.
 
 ## Why This Repo Exists
 
@@ -108,3 +109,4 @@ This repository is intended as a learning and portfolio project that shows:
 - console-based workflow handling
 - basic input validation and automated tests
 - incremental improvement from a simple member-selection flow in `v1` to plan-based enrollment in `v2`
+- a comparison between constructor injection in `v2` and setter injection in `v3`

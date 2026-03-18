@@ -3,14 +3,17 @@ package com.example.Cinemaxify;
 abstract class MemberProfile implements User {
 
     private final String memberType;
-    private final Plan plan;
+    private Plan plan;
     private String name;
     private int age;
     private long contact;
     private String address;
 
-    protected MemberProfile(String memberType, Plan plan) {
+    protected MemberProfile(String memberType) {
         this.memberType = memberType;
+    }
+
+    public void setPlan(Plan plan) {
         this.plan = plan;
     }
 

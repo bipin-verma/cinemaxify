@@ -8,19 +8,19 @@
     <bean id="premium" class="com.example.Cinemaxify.PremiumPlan"/>
 
     <bean id="selfNormal" class="com.example.Cinemaxify.Self">
-        <constructor-arg ref="normal"/>
+        <property name="plan" ref="normal"/>
     </bean>
 
     <bean id="spouseNormal" class="com.example.Cinemaxify.Spouse">
-        <constructor-arg ref="normal"/>
+        <property name="plan" ref="normal"/>
     </bean>
 
     <bean id="selfPremium" class="com.example.Cinemaxify.Self">
-        <constructor-arg ref="premium"/>
+        <property name="plan" ref="premium"/>
     </bean>
 
     <bean id="spousePremium" class="com.example.Cinemaxify.Spouse">
-        <constructor-arg ref="premium"/>
+        <property name="plan" ref="premium"/>
     </bean>
 
 </beans>

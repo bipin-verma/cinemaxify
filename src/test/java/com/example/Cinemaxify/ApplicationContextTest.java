@@ -2,6 +2,7 @@ package com.example.Cinemaxify;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
@@ -25,6 +26,8 @@ class ApplicationContextTest {
             assertEquals("normal", users.get("spouseNormal").getUserPlan().getPlanName());
             assertEquals("premium", users.get("selfPremium").getUserPlan().getPlanName());
             assertEquals("premium", users.get("spousePremium").getUserPlan().getPlanName());
+            assertTrue(users.get("selfNormal") instanceof Self);
+            assertTrue(users.get("spousePremium") instanceof Spouse);
         }
     }
 }

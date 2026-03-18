@@ -2,6 +2,21 @@
 
 All notable changes to this project are documented in this file.
 
+## [v3.0.0] - 2026-03-18
+
+### Summary
+Third version of the Cinemaxify project that keeps the plan-based enrollment flow from `v2` and changes the Spring bean wiring to setter-based dependency injection.
+
+### Highlights
+- Reworked `Self` and `Spouse` to receive `Plan` through a setter instead of a constructor.
+- Updated `MemberProfile` to support property-based plan injection.
+- Changed Spring XML bean definitions from constructor args to `<property>` injection.
+- Kept the `v2` console workflow and validation behavior intact.
+- Updated tests and documentation to reflect the new dependency injection style.
+
+### Notes
+This version is mainly an architectural refinement that demonstrates another common Spring wiring style without changing the user-facing enrollment flow.
+
 ## [v2.0.0] - 2026-03-18
 
 ### Summary
