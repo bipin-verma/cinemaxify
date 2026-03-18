@@ -16,54 +16,76 @@ public class MembershipWorkflow {
 
     public void run() {
         System.out.println("Welcome to the Cinemaxify Application");
-        System.out.println("Please select the member you want the plan for:");
-        System.out.println("1. Self");
-        System.out.println("2. Spouse");
-        System.out.println("3. Exit");
+        while (true) {
+            Integer userChoice = promptForMenuChoice(
+                    "Please select the member you want the plan for:",
+                    "1. Self",
+                    "2. Spouse",
+                    "3. Exit"
+            );
 
-        Integer userChoice = parseInteger(readLine());
-        if (userChoice == null) {
-            System.out.println("Invalid choice.");
-            return;
+            if (userChoice == 3) {
+                System.out.println("Exiting...");
+                return;
+            }
+
+            Integer planChoice = promptForMenuChoice(
+                    "Please select your plan:",
+                    "1. Normal",
+                    "2. Premium"
+            );
+
+            User user = getUserFromChoice(userChoice, planChoice);
+            String name = promptForNonBlank("Please enter your name:");
+            Integer age = promptForPositiveInteger("Please enter your age:");
+            Long contact = promptForPositiveLong("Please enter your contact:");
+            String address = promptForNonBlank("Please enter your address:");
+
+            user.setUserDetails(name, age, contact, address);
+            user.getUserDetails();
+
+            Integer continueChoice = promptForMenuChoice(
+                    "Do you want to purchase a plan for someone else?",
+                    "1. Yes",
+                    "2. No"
+            );
+
+            if (continueChoice == 2) {
+                System.out.println("Exiting...");
+                return;
+            }
         }
-
-        if (userChoice == 3) {
-            System.out.println("Exiting...");
-            return;
-        }
-
-        User user = getUserFromChoice(userChoice);
-        if (user == null) {
-            System.out.println("Invalid choice.");
-            return;
-        }
-
-        String name = promptForNonBlank("Please enter your name:");
-        Integer age = promptForPositiveInteger("Please enter your age:");
-        Long contact = promptForPositiveLong("Please enter your contact:");
-        String address = promptForNonBlank("Please enter your address:");
-
-        user.setUserDetails(name, age, contact, address);
-        user.getUserDetails();
     }
 
-    private User getUserFromChoice(int userChoice) {
-        return switch (userChoice) {
-            case 1 -> context.getBean("self", User.class);
-            case 2 -> context.getBean("spouse", User.class);
-            default -> null;
+    private User getUserFromChoice(int userChoice, int planChoice) {
+        String memberType = switch (userChoice) {
+            case 1 -> "self";
+            case 2 -> "spouse";
+            default -> throw new IllegalArgumentException("Unsupported member choice: " + userChoice);
         };
+
+        String planType = switch (planChoice) {
+            case 1 -> "Normal";
+            case 2 -> "Premium";
+            default -> throw new IllegalArgumentException("Unsupported plan choice: " + planChoice);
+        };
+
+        return context.getBean(memberType + planType, User.class);
     }
 
-    private String promptForNonBlank(String prompt) {
+    private Integer promptForMenuChoice(String prompt, String... options) {
         while (true) {
             System.out.println(prompt);
-            String value = readLine();
-            if (value != null && !value.isBlank()) {
+            for (String option : options) {
+                System.out.println(option);
+            }
+
+            Integer value = parseInteger(readLine());
+            if (value != null && value >= 1 && value <= options.length) {
                 return value;
             }
 
-            System.out.println("Value cannot be blank. Please try again.");
+            System.out.println("Invalid choice.");
         }
     }
 
@@ -88,6 +110,18 @@ public class MembershipWorkflow {
             }
 
             System.out.println("Please enter a valid positive contact number.");
+        }
+    }
+
+    private String promptForNonBlank(String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            String value = readLine();
+            if (value != null && !value.isBlank()) {
+                return value;
+            }
+
+            System.out.println("Value cannot be blank. Please try again.");
         }
     }
 

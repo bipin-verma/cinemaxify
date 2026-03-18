@@ -25,8 +25,8 @@ class MemberProfileTest {
 
     private static Stream<Arguments> profileCases() {
         return Stream.of(
-                Arguments.of(new Self(), "self"),
-                Arguments.of(new Spouse(), "spouse")
+                Arguments.of(new Self(new NormalPlan()), "self"),
+                Arguments.of(new Spouse(new PremiumPlan()), "spouse")
         );
     }
 }

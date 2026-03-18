@@ -2,6 +2,21 @@
 
 All notable changes to this project are documented in this file.
 
+## [v2.0.0] - 2026-03-18
+
+### Summary
+Second version of the Cinemaxify project that adds plan selection and a repeated enrollment workflow on top of the original member-profile flow.
+
+### Highlights
+- Added `Plan`, `NormalPlan`, and `PremiumPlan` to model membership plan choices.
+- Switched Spring XML wiring from basic member beans to member-plan combinations.
+- Updated the console workflow to let users choose self or spouse, then normal or premium.
+- Added the option to enroll another person in the same runtime session.
+- Expanded tests and documentation to cover the new flow.
+
+### Notes
+This version upgrades the project from simple member-detail collection into a more complete membership-enrollment console flow.
+
 ## [v1.0.0] - 2026-03-18
 
 ### Summary

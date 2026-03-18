@@ -3,13 +3,15 @@ package com.example.Cinemaxify;
 abstract class MemberProfile implements User {
 
     private final String memberType;
+    private final Plan plan;
     private String name;
     private int age;
     private long contact;
     private String address;
 
-    protected MemberProfile(String memberType) {
+    protected MemberProfile(String memberType, Plan plan) {
         this.memberType = memberType;
+        this.plan = plan;
     }
 
     @Override
@@ -26,5 +28,11 @@ abstract class MemberProfile implements User {
         System.out.println("age: " + age);
         System.out.println("contact: " + contact);
         System.out.println("address: " + address);
+        System.out.println("plan: " + plan.getPlanName());
+    }
+
+    @Override
+    public Plan getUserPlan() {
+        return plan;
     }
 }

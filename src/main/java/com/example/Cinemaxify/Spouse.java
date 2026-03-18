@@ -2,7 +2,7 @@ package com.example.Cinemaxify;
 
 public class Spouse extends MemberProfile {
 
-    public Spouse() {
-        super("spouse");
+    public Spouse(Plan plan) {
+        super("spouse", plan);
     }
 }

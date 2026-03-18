@@ -4,10 +4,23 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!--    Define the bean id with camelCase Format -->
-<!--    Example My class name is Self then camelCase name would be self -->
+    <bean id="normal" class="com.example.Cinemaxify.NormalPlan"/>
+    <bean id="premium" class="com.example.Cinemaxify.PremiumPlan"/>
 
-	<bean id="self" class="com.example.Cinemaxify.Self"></bean>
-	<bean id="spouse" class="com.example.Cinemaxify.Spouse"></bean>
+    <bean id="selfNormal" class="com.example.Cinemaxify.Self">
+        <constructor-arg ref="normal"/>
+    </bean>
+
+    <bean id="spouseNormal" class="com.example.Cinemaxify.Spouse">
+        <constructor-arg ref="normal"/>
+    </bean>
+
+    <bean id="selfPremium" class="com.example.Cinemaxify.Self">
+        <constructor-arg ref="premium"/>
+    </bean>
+
+    <bean id="spousePremium" class="com.example.Cinemaxify.Spouse">
+        <constructor-arg ref="premium"/>
+    </bean>
 
 </beans>

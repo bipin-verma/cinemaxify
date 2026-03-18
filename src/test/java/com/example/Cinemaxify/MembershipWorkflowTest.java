@@ -12,19 +12,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 class MembershipWorkflowTest {
 
     @Test
-    void collectsSelfMemberDetailsAndPrintsThem() {
+    void collectsSelfMemberDetailsWithNormalPlanAndPrintsThem() {
         try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml")) {
             MembershipWorkflow workflow = new MembershipWorkflow(
                     context,
-                    scannerFor("1", "Bipin", "25", "9876543210", "Pune")
+                    scannerFor("1", "1", "Bipin", "25", "9876543210", "Pune", "2")
             );
 
             String output = ConsoleTestSupport.captureOutput(workflow::run);
 
             assertTrue(output.contains("Welcome to the Cinemaxify Application"));
             assertTrue(output.contains("Please select the member you want the plan for:"));
+            assertTrue(output.contains("Please select your plan:"));
             assertTrue(output.contains("Hello Bipin, you have entered the following details for self:"));
             assertTrue(output.contains("contact: 9876543210"));
+            assertTrue(output.contains("plan: normal"));
         }
     }
 
@@ -44,7 +46,7 @@ class MembershipWorkflowTest {
         try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml")) {
             MembershipWorkflow workflow = new MembershipWorkflow(
                     context,
-                    scannerFor("2", "Anaya", "-1", "30", "9998887776", "Delhi")
+                    scannerFor("2", "2", "Anaya", "-1", "30", "9998887776", "Delhi", "2")
             );
 
             String output = ConsoleTestSupport.captureOutput(workflow::run);
@@ -52,6 +54,27 @@ class MembershipWorkflowTest {
             assertTrue(output.contains("Please enter a valid positive number."));
             assertTrue(output.contains("Hello Anaya, you have entered the following details for spouse:"));
             assertTrue(output.contains("address: Delhi"));
+            assertTrue(output.contains("plan: premium"));
+        }
+    }
+
+    @Test
+    void loopsToCreateAnotherPlanWhenUserChoosesYes() {
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml")) {
+            MembershipWorkflow workflow = new MembershipWorkflow(
+                    context,
+                    scannerFor(
+                            "1", "2", "Bipin", "25", "9876543210", "Pune", "1",
+                            "2", "1", "Anaya", "28", "9998887776", "Delhi", "2"
+                    )
+            );
+
+            String output = ConsoleTestSupport.captureOutput(workflow::run);
+
+            assertTrue(output.contains("Hello Bipin, you have entered the following details for self:"));
+            assertTrue(output.contains("plan: premium"));
+            assertTrue(output.contains("Hello Anaya, you have entered the following details for spouse:"));
+            assertTrue(output.contains("plan: normal"));
         }
     }
 
